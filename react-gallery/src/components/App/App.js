@@ -1,9 +1,10 @@
+import { Switch, Route } from 'react-router-dom';
+
 import { Nav } from '../Nav';
 import { About } from '../About';
 import { Gallery } from '../Gallery';
 import { Contact } from '../Contact';
 import { Error404 } from '../Error404';
-import { Switch, Route } from 'react-router-dom';
 import { GlobalStyle } from './StyledApp';
 
 
