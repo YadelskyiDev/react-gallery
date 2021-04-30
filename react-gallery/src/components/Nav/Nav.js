@@ -1,7 +1,6 @@
-import React from 'react';
 import { Switch } from 'react-router-dom';
-import { StyledNav, Ul, Li, StyledLink } from './StyledNav';
 
+import { StyledNav, Ul, Li, StyledLink } from './StyledNav';
 
 export function Nav () {
     return(
