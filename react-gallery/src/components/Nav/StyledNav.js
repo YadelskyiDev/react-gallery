@@ -6,7 +6,7 @@ export const StyledNav = styled.nav`
     justify-content: center;
     margin: 0;
     padding: 0;
-    position: relative;
+    position: absolute;
     z-index: 99;
     width: 100%;
     height: 25vh;
