@@ -14,10 +14,10 @@ const Slider = props => {
     console.log(props)
     return(
         <SliderWrapper>
-            <SliderContent>
-                {/* translate={translate}
+            <SliderContent
+                translate={translate}
                 transition={transition}
-                width={getWidth()} */}
+                width={getWidth()}>
                 {
                     props.slides.map(slide => <Slide key={slide} content={slide}/>)
                 }

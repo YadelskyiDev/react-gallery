@@ -7,7 +7,7 @@ export const SliderWrapper = styled.div`
     margin: 0 auto;
     overflow: hidden;
 `
-export const SliderContent = styled.div`
+export const SliderContent = styled(({ props, ...rest }) => <div {...rest} />)`
     transform: translateX(-${props => props.translate}px);
     transition: transform ease-out ${props => props.transition}s;
     height: 100%;
