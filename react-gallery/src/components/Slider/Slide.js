@@ -1,18 +1,13 @@
-import React from 'react';
 import styled from 'styled-components';
 
-const StyledSlide = styled.div`
-    height: 100%;
+const StyledSlide  = styled(({ ...content }) => <div {...content} />)`
+   height: 100%;
     width:100%;
-    background-image: url('${content}');
+    background-image: url(${({content}) => content});
     background-size: cover;
     background-repeat: no-repeat;
-    background-position: center;
-`
+    background-position: center;`
 
-export const Slide = ({ content }) => (  
-    <div>
-        <StyledSlide/>
-    </div>  
+export const Slide = ({ content }) => (    
+    <StyledSlide content={content}/>
 )
-

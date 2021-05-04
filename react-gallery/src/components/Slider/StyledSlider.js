@@ -14,4 +14,3 @@ export const SliderContent = styled.div`
     width: ${props => props.width}px;
     display:flex;
 `
-
