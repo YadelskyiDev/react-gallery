@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Arrow } from './Arrow';
 import { Slide } from './Slide';
 import { SliderWrapper, SliderContent } from './StyledSlider';
 
@@ -17,11 +18,13 @@ const Slider = props => {
             <SliderContent
                 translate={translate}
                 transition={transition}
-                width={getWidth()}>
+                width={getWidth() * props.slides.length}>
                 {
                     props.slides.map(slide => <Slide key={slide} content={slide}/>)
                 }
             </SliderContent>
+            <Arrow direction='right'/>
+            <Arrow direction='left'/>
         </SliderWrapper>
     )
 }
