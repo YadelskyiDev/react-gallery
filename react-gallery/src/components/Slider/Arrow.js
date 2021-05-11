@@ -4,7 +4,7 @@ import leftArrow from '../../Images/arrow-left.svg';
 import {StyledArrow} from './StyledArrow';
 
 export const Arrow = ( { direction, handleClick }) => (
-    <StyledArrow direction={direction}>
-        {direction === 'right' ? <img src={rightArrow}/> : <img src={leftArrow}/>}
+    <StyledArrow direction={direction}  onClick={handleClick}>
+        {direction === 'right' ? <img src={rightArrow} alt="right-arrow"/> : <img src={leftArrow} alt="left-arrow"/>}
     </StyledArrow> 
 )
