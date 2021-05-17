@@ -12,7 +12,6 @@ export const StyledArrow = styled(({ direction, ...rest }) => <div {...rest}/>)`
     &:hover{
         transform: scale(1.1);
         opacity: 0.9;
-        fill: #ff0000;
     }
     img{
         opacity:1;

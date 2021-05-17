@@ -1,4 +1,4 @@
-import Slider from '../Slider/Slider'
+import { Slider } from '../Slider/Slider'
 
 
 const images = [
@@ -11,7 +11,7 @@ const images = [
 export function Gallery () {
     return(
         <>
-            <Slider slides={images}/>
+            <Slider slides={images} autoPlay={3}/>
             <h1>Gallery</h1>
         </>
     )
