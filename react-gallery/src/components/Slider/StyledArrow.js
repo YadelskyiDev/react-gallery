@@ -11,8 +11,8 @@ export const StyledArrow = styled(({ direction, ...rest }) => <div {...rest}/>)`
     transition: transform ease-in 0.1s;
     &:hover{
         transform: scale(1.1);
-        opacity: 0.9;
-        fill: #ff0000;
+        //opacity: 0.9;
+        fill: #202020;
     }
     img{
         opacity:1;
