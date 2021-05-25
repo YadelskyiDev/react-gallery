@@ -8,9 +8,13 @@ export const SliderWrapper = styled.div`
     overflow: hidden;
 `
 export const SliderContent = styled(({ props, ...rest }) => <div {...rest} />)`
-    transform: translateX(-${props => props.translate}px);
-    transition: transform ease-out ${props => props.transition}s;
+    height: 100%;
+    width: 100%;
+    & > div {
     height: 100%;
     width: ${props => props.width}px;
+    transform: translateX(-${props => props.translate}px);
+    transition: transform ease-out ${props => props.transition}s;
     display:flex;
+    }
 `

@@ -11,7 +11,7 @@ const images = [
 export function Gallery () {
     return(
         <>
-            <Slider slides={images} autoPlay={3}/>
+            <Slider slides={images} autoPlay={5}/>
             <h1>Gallery</h1>
         </>
     )
