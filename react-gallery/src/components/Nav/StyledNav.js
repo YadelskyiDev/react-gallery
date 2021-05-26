@@ -27,6 +27,7 @@ export const Li = styled.li`
 const activeClassName = 'nav-item-active';
 
 export const StyledLink = styled(NavLink).attrs({activeClassName})`
+    user-select: none;   
     color: black;
     text-transform: uppercase;
     text-decoration: none;
