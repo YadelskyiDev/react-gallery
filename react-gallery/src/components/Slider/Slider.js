@@ -4,6 +4,7 @@ import { Slide } from './Slide';
 import { SliderWrapper, SliderContent } from './StyledSlider';
 
 const getWidth = () => window.innerWidth;
+const halfWidth = getWidth() / 2;
 
 export const Slider = props => {
     const [state, setState] = useState({
@@ -16,6 +17,8 @@ export const Slider = props => {
         clickDown: false,
         deltaX: 0
     })
+
+    const [renderTimeout, setRenderTimeout] = useState(false)
 
     const swipeRef = useRef(null);
 
@@ -88,28 +91,41 @@ export const Slider = props => {
 
 
     const mouseDownHandler = useCallback(e => {
-        return setState({
-            ...state,
-            startX: e.screenX,
-            clickDown: true,
-            autoPlayAvailable: false,
-        })
-    },[state])
-     
-    const mouseMoveHandler = useCallback (e => {
-        if(clickDown){
-            const delta = e.screenX - startX
+        if(startX === 0){
             return setState({
                 ...state,
-                deltaX: delta,
-                slideTranslate: translate - delta,
-            }) 
+                startX: e.screenX,
+                clickDown: true,
+                autoPlayAvailable: false,
+            })
+        }else{
+            e.stopPropagation()
+            e.preventDefault()
         }
-    }, [state, translate, clickDown, startX])
+   
+    },[state, startX])
+     
+    const mouseMoveHandler = useCallback (e => {
+        if(clickDown && !renderTimeout && startX !== 0){
+            const delta = e.screenX - startX
+            window.setTimeout(() => {
+                setRenderTimeout(false)
+            }, 50);
+            setRenderTimeout(true)
+            setState({
+                ...state,
+                deltaX: delta,
+                slideTranslate: translate - delta
+            }) 
+        }else{
+            e.stopPropagation()
+            e.preventDefault()
+        }
+    }, [state, translate, clickDown, startX, renderTimeout])
     
 
-    const mouseUpHandler = useCallback(() => {
-        const halfWidth = getWidth() / 2
+    const mouseUpHandler = useCallback(e => {
+      
         const stateReset = {
             clickDown: false,
             startX: 0,
@@ -118,37 +134,43 @@ export const Slider = props => {
             slideTranslate: translate
         }
         
-        if(deltaX >= halfWidth){
-            prevSlide(stateReset)
-        }
-        else if(deltaX <= -halfWidth){
-            nextSlide(stateReset)
-        } else {
-            return setState({
-                ...state,
-                ...stateReset,
-            })
+        if(deltaX !== 0){
+            if(deltaX >= halfWidth){
+                prevSlide(stateReset)
+            }
+            else if(deltaX <= -halfWidth){
+                nextSlide(stateReset)
+            } else {
+                e.stopPropagation()
+                e.preventDefault()
+                return setState({
+                    ...state,
+                    ...stateReset,
+                })
+            }
         }
     }, [deltaX, nextSlide, prevSlide, state, translate])
 
 
     useEffect(()=>{
-        const el = swipeRef.current;
-        el.removeEventListener('mouseup', mouseUpHandler)
-        el.removeEventListener('mousedown', mouseDownHandler)
-
+        const el = swipeRef.current;  
         el.addEventListener('mousedown', mouseDownHandler)
         
-        document.addEventListener('mousemove', mouseMoveHandler)
-        document.addEventListener('mouseup', mouseUpHandler)
+        if(clickDown){
+            document.addEventListener('mousemove', mouseMoveHandler)
+            document.addEventListener('mouseup', mouseUpHandler)
+        }else{
+            document.removeEventListener('mousemove', mouseMoveHandler)
+            document.removeEventListener('mouseup', mouseUpHandler)
+        }
         
         return () => {
-            document.removeEventListener('mousemove', mouseMoveHandler)
             el.removeEventListener('mousedown', mouseDownHandler)
+            document.removeEventListener('mousemove', mouseMoveHandler)
             document.removeEventListener('mouseup', mouseUpHandler)
           
         }
-    },[swipeRef, mouseDownHandler,  mouseUpHandler,mouseMoveHandler, clickDown])
+    },[swipeRef, clickDown, mouseDownHandler,  mouseUpHandler, mouseMoveHandler])
 
     const styles = {
         transform: `translateX(-${slideTranslate}px)`,
@@ -157,7 +179,7 @@ export const Slider = props => {
         display:`flex`,
         transition: `transform ease-out ${transition}s`
     }
-        
+
 
 
     return(
