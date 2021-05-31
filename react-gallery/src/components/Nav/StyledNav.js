@@ -15,13 +15,12 @@ export const StyledNav = styled.nav`
 export const Ul = styled.ul`
     display:flex;
     align-items: center;
+    justify-content: space-between;
     `;
 
 export const Li = styled.li`
     list-style-type: none;
-    &:hover{
-        transform: scale(1.1);
-    }
+    margin: 0 20px;
 `;
 
 const activeClassName = 'nav-item-active';
@@ -29,12 +28,16 @@ const activeClassName = 'nav-item-active';
 export const StyledLink = styled(NavLink).attrs({activeClassName})`
     user-select: none;   
     color: black;
+    -webkit-text-stroke: .8px rgba(0,0,0,0.5);
+    -webkit-text-fill-color: white;
     text-transform: uppercase;
+    font-size: 1.5em;
     text-decoration: none;
-    margin: 0 10px;
+    padding: 8px 0;
     &.${activeClassName}{
         border-bottom: 1px solid black;
-        font-weight: bolder;
-        padding-bottom: 8px;
+    }
+    &:hover{
+        border-bottom: 1px solid black;
     }
 `;
