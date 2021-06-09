@@ -14,6 +14,7 @@ export const StyledArrow = styled(({ direction, ...rest }) => <div {...rest}/>)`
         opacity: 0.9;
     }
     img{
+        transform: translateX(${({direction}) => direction === 'left' ? '-2' : '2'}px);
         opacity:1;
         &:focus{
             outline: 0;
