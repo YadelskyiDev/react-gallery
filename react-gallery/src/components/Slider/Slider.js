@@ -11,7 +11,7 @@ export const Slider = props => {
     const maxSlideIndex = slides.length
 
     const [state, setState] = useState({
-        autoPlayAvailable: false,
+        autoPlayAvailable: true,
         translate: 0,
         slideTranslate: getWidth(),
         transition: 0.45,
@@ -44,22 +44,17 @@ export const Slider = props => {
         }
     }, [autoPlay, autoPlayAvailable])
 
-    const next = useCallback(({ stateReset }) => {
+    const next = useCallback(() => {
         console.log(maxSlideIndex)
-        if(activeSlide >= maxSlideIndex - 1){
-            activeSlide.current = 1
-        }else{
-            activeSlide.current++
-        }
        
+        activeSlide.current++
      
         console.log(activeSlide.current)
         let translate = activeSlide.current * getWidth()
-        if(activeSlide.current === maxSlideIndex + 1) {
+        if(activeSlide.current >= maxSlideIndex + 1) {
             translate = getWidth()
             setState({
                 ...state,
-                ...stateReset,
                 translate,
                 slideTranslate: translate
             })
@@ -67,7 +62,6 @@ export const Slider = props => {
             setTimeout(() => {
                 setState({
                     ...state,
-                    ...stateReset,
                     translate,
                     slideTranslate: translate
                 })
@@ -75,7 +69,6 @@ export const Slider = props => {
         } else {
             setState({
                 ...state,
-                ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
@@ -83,7 +76,7 @@ export const Slider = props => {
     },[activeSlide, state, maxSlideIndex])
 
 
-    const prev = useCallback(({ stateReset }) => {
+    const prev = useCallback(() => {
         activeSlide.current--
         let translate = activeSlide.current * getWidth()
         console.log(activeSlide.current);
@@ -91,7 +84,6 @@ export const Slider = props => {
             translate = (maxSlideIndex + 1) * getWidth()
             setState({
                 ...state,
-                ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
@@ -99,7 +91,6 @@ export const Slider = props => {
             setTimeout(() => {
                 setState({
                     ...state,
-                    ...stateReset,
                     translate,
                     slideTranslate: translate
                 })
@@ -112,7 +103,6 @@ export const Slider = props => {
         
             setState({
                 ...state,
-                ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
