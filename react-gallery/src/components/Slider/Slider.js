@@ -8,6 +8,7 @@ const halfWidth = Math.round(getWidth() / 2);
 
 export const Slider = props => {
     const { autoPlay, slides } = props;
+    
     const firsSlide = slides[0]
     const secondSlide = slides[1]
     const lastSlide = slides[2]
@@ -180,7 +181,7 @@ export const Slider = props => {
         display:`flex`,
         transform: `translateX(-${slideTranslate}px)`,
         height: `100%`,
-        width: `${getWidth() * slides.length}px`,
+        width: `${getWidth() * _slides.length}px`,
         transition: `transform ease-out ${transition}s`
     }
 
