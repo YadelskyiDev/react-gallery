@@ -13,10 +13,11 @@ export const Slider = props => {
     const [state, setState] = useState({
         autoPlayAvailable: true,
         translate: 0,
-        slideTranslate: getWidth(),
+        slideTranslate: 0,
         transition: 0.45,
         startX: 0,
         clickDown: false,
+        slideMove: false,
         deltaX: 0,
         _slides: [slides[maxSlideIndex-1], ...slides, slides[0]]
     })
@@ -28,7 +29,8 @@ export const Slider = props => {
    
     const autoPlayRef = useRef();
     const swipeRef = useRef(null);
-    const activeSlide = useRef(1);
+    const activeSlide = useRef(0);
+
     useEffect(() => {
         autoPlayRef.current = next;
     })
@@ -44,17 +46,15 @@ export const Slider = props => {
         }
     }, [autoPlay, autoPlayAvailable])
 
-    const next = useCallback(() => {
-        console.log(maxSlideIndex)
-       
+    const next = useCallback(stateReset => {
         activeSlide.current++
-     
-        console.log(activeSlide.current)
+
         let translate = activeSlide.current * getWidth()
-        if(activeSlide.current >= maxSlideIndex + 1) {
+        if(activeSlide.current >= maxSlideIndex) {
             translate = getWidth()
             setState({
                 ...state,
+                ...stateReset,
                 translate,
                 slideTranslate: translate
             })
@@ -62,6 +62,7 @@ export const Slider = props => {
             setTimeout(() => {
                 setState({
                     ...state,
+                    ...stateReset,
                     translate,
                     slideTranslate: translate
                 })
@@ -69,6 +70,7 @@ export const Slider = props => {
         } else {
             setState({
                 ...state,
+                ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
@@ -76,14 +78,20 @@ export const Slider = props => {
     },[activeSlide, state, maxSlideIndex])
 
 
-    const prev = useCallback(() => {
+    const prev = useCallback(stateReset => {
+        if(activeSlide.current === 0){
+            activeSlide.current = maxSlideIndex 
+
+        }
+       
         activeSlide.current--
+
         let translate = activeSlide.current * getWidth()
-        console.log(activeSlide.current);
-        if(activeSlide.current === 1) {
-            translate = (maxSlideIndex + 1) * getWidth()
+        if(activeSlide.current === 0) {
+            translate = maxSlideIndex * getWidth()
             setState({
                 ...state,
+                ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
@@ -91,25 +99,24 @@ export const Slider = props => {
             setTimeout(() => {
                 setState({
                     ...state,
+                    ...stateReset,
                     translate,
                     slideTranslate: translate
                 })
                 
             })
-        } else {
-            if(activeSlide.current === 0){
-                activeSlide.current = maxSlideIndex 
-            }
-        
-            setState({
+        } else 
+            return setState({
                 ...state,
+                ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
-        }
+        
+       
     },[activeSlide, state, maxSlideIndex])
 
-
+    console.log(activeSlide.current)
     const mouseDownHandler = useCallback(e => {
         if(startX === 0){
             document.removeEventListener('mousemove', resetEvents(e))
@@ -144,6 +151,8 @@ export const Slider = props => {
     
 
     const mouseUpHandler = useCallback(e => {
+        document.removeEventListener('mousemove', resetEvents(e))
+        document.removeEventListener('mouseup',resetEvents(e))
         const stateReset = {
             clickDown: false,
             startX: 0,
@@ -152,24 +161,23 @@ export const Slider = props => {
             slideTranslate: translate
         }
         
-        if(deltaX !== 0){
-            if(deltaX >= halfWidth && deltaX > 500){
-                prev({ stateReset })
-            }
-            else if(deltaX <= -halfWidth && deltaX < 500){
-                next({ stateReset} )
-            } else {
-                return setState({
-                    ...state,
-                    ...stateReset,
-                })
-            }
+        if(deltaX >= halfWidth && deltaX > 500){
+            prev(stateReset)
         }
+        else if(deltaX <= -halfWidth && deltaX < 500){
+            next(stateReset)
+        } else{
+            return setState({
+                ...state,
+                ...stateReset,
+            })
+        }
+        
     }, [deltaX, next, prev, state, translate])
 
     const resetEvents = event => {
-        event.stopPropagation()
         event.preventDefault()
+        event.stopPropagation()
     }
 
     useEffect(()=>{
@@ -179,7 +187,8 @@ export const Slider = props => {
             el.addEventListener('mousedown', mouseDownHandler)
             document.removeEventListener('mousemove', mouseMoveHandler)
             document.removeEventListener('mouseup', mouseUpHandler)
-        }else{
+        }
+        else{
             el.removeEventListener('mousedown', mouseDownHandler)
             document.addEventListener('mousemove', mouseMoveHandler)
             document.addEventListener('mouseup', mouseUpHandler)
@@ -190,7 +199,7 @@ export const Slider = props => {
             document.removeEventListener('mousemove', mouseMoveHandler)
             document.removeEventListener('mouseup', mouseUpHandler)
         }
-    },[swipeRef, clickDown, mouseDownHandler,  mouseUpHandler, mouseMoveHandler])
+    },[swipeRef, clickDown, mouseDownHandler,  mouseUpHandler, mouseMoveHandler,slideTranslate])
 
     const styles = {
         display:`flex`,
