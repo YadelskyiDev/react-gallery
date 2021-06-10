@@ -28,23 +28,26 @@ export const Slider = props => {
     const { translate, slideTranslate, _slides, transition, startX, clickDown, deltaX, autoPlayAvailable } = state;
    
     const autoPlayRef = useRef();
-    const swipeRef = useRef(null);
+    const swipeRef = useRef();
     const activeSlide = useRef(0);
 
+    
     useEffect(() => {
         autoPlayRef.current = next;
     })
+
 
     useEffect(() => {
         const play = () => {
             autoPlayRef.current();
         }
         let interval = null
-        if(autoPlay !== null && autoPlayAvailable){
+        if(autoPlay && autoPlayAvailable){
             interval = setInterval(play, autoPlay * 1000)
             return () => clearInterval(interval)
         }
     }, [autoPlay, autoPlayAvailable])
+
 
     const next = useCallback(stateReset => {
         activeSlide.current++
@@ -81,9 +84,8 @@ export const Slider = props => {
     const prev = useCallback(stateReset => {
         if(activeSlide.current === 0){
             activeSlide.current = maxSlideIndex 
-
         }
-       
+
         activeSlide.current--
 
         let translate = activeSlide.current * getWidth()
@@ -106,17 +108,15 @@ export const Slider = props => {
                 
             })
         } else 
-            return setState({
+            setState({
                 ...state,
                 ...stateReset,
                 translate,
                 slideTranslate: translate,
             })
-        
-       
     },[activeSlide, state, maxSlideIndex])
 
-    console.log(activeSlide.current)
+
     const mouseDownHandler = useCallback(e => {
         if(startX === 0){
             document.removeEventListener('mousemove', resetEvents(e))
@@ -124,14 +124,12 @@ export const Slider = props => {
                 ...state,
                 startX: e.screenX,
                 clickDown: true,
-                autoPlayAvailable: false,
+                autoPlayAvailable: false
             })
-        }else{
-            resetEvents(e)
         }
-   
     },[state, startX])
      
+
     const mouseMoveHandler = useCallback (e => {
         if(clickDown && !renderTimeout && startX !== 0){
             const delta = e.screenX - startX
@@ -157,7 +155,7 @@ export const Slider = props => {
             clickDown: false,
             startX: 0,
             deltaX: 0,
-            autoPlayAvailable: false,
+            autoPlayAvailable: true,
             slideTranslate: translate
         }
         
@@ -180,6 +178,7 @@ export const Slider = props => {
         event.stopPropagation()
     }
 
+
     useEffect(()=>{
         const el = swipeRef.current;  
 
@@ -199,7 +198,8 @@ export const Slider = props => {
             document.removeEventListener('mousemove', mouseMoveHandler)
             document.removeEventListener('mouseup', mouseUpHandler)
         }
-    },[swipeRef, clickDown, mouseDownHandler,  mouseUpHandler, mouseMoveHandler,slideTranslate])
+    },[swipeRef, clickDown, mouseDownHandler,  mouseUpHandler, mouseMoveHandler])
+
 
     const styles = {
         display:`flex`,
