@@ -17,7 +17,6 @@ export const Slider = props => {
         transition: 0.45,
         startX: 0,
         clickDown: false,
-        slideMove: false,
         deltaX: 0,
         _slides: [slides[maxSlideIndex-1], ...slides, slides[0]]
     })
@@ -25,7 +24,7 @@ export const Slider = props => {
     const [renderTimeout, setRenderTimeout] = useState(false);
 
    
-    const { translate, slideTranslate, _slides, transition, startX, clickDown, deltaX, autoPlayAvailable } = state;
+    const { translate, transition, slideTranslate, _slides, startX, clickDown, deltaX, autoPlayAvailable } = state;
    
     const autoPlayRef = useRef();
     const swipeRef = useRef();
