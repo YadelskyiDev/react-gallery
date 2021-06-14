@@ -3,95 +3,118 @@ import { Arrow } from './Arrow';
 import { Slide } from './Slide';
 import { SliderWrapper } from './StyledSlider';
 
-const getWidth = () => document.documentElement.clientWidth;
+const getWidth = () => window.innerWidth;
 const halfWidth = Math.round(getWidth() / 2);
 
 export const Slider = props => {
     const { autoPlay, slides } = props;
-    
-    const firsSlide = slides[0]
-    const secondSlide = slides[1]
-    const lastSlide = slides[2]
+    const maxSlideIndex = slides.length
 
     const [state, setState] = useState({
         autoPlayAvailable: true,
-        activeSlide: 0,
-        translate: getWidth(),
+        translate: 0,
         slideTranslate: 0,
         transition: 0.45,
         startX: 0,
         clickDown: false,
         deltaX: 0,
-        _slides: [firsSlide, secondSlide, lastSlide]
+        _slides: [slides[maxSlideIndex-1], ...slides, slides[0]]
     })
 
     const [renderTimeout, setRenderTimeout] = useState(false);
 
    
-    const { translate, slideTranslate, _slides, transition, activeSlide, startX, clickDown, deltaX, autoPlayAvailable } = state;
+    const { translate, transition, slideTranslate, _slides, startX, clickDown, deltaX, autoPlayAvailable } = state;
    
     const autoPlayRef = useRef();
-    const swipeRef = useRef(null);
+    const swipeRef = useRef();
+    const activeSlide = useRef(0);
 
+    
     useEffect(() => {
-        autoPlayRef.current = nextSlide;
+        autoPlayRef.current = next;
     })
+
 
     useEffect(() => {
         const play = () => {
             autoPlayRef.current();
         }
         let interval = null
-        if(autoPlay !== null && autoPlayAvailable){
+        if(autoPlay && autoPlayAvailable){
             interval = setInterval(play, autoPlay * 1000)
             return () => clearInterval(interval)
         }
-    }, [autoPlay, autoPlayAvailable])
+    }, [autoPlay, autoPlayAvailable, clickDown])
 
-    const nextSlide = useCallback(stateReset => {
-        if(activeSlide === _slides.length - 1) {
-            return setState({
+
+    const next = useCallback(stateReset => {
+        activeSlide.current++
+
+        let translate = activeSlide.current * getWidth()
+        if(activeSlide.current > maxSlideIndex) {
+            translate = getWidth()
+            setState({
                 ...state,
                 ...stateReset,
-                translate: 0,
-                slideTranslate: 0,
-                activeSlide: 0,
+                translate,
+                slideTranslate: translate
             })
-        }
-        const translate = (activeSlide + 1) * getWidth()
-        setState({
-            ...state,
-            ...stateReset,
-            activeSlide: activeSlide + 1,
-            translate,
-            slideTranslate: translate
-        })
-    },[activeSlide, _slides.length, state])
-
-
-    const prevSlide = useCallback(stateReset => {
-        if(activeSlide === 0){
-            const translate = (_slides.length - 1) * getWidth()
-
-            return setState({
+            activeSlide.current = 1
+            setTimeout(() => {
+                setState({
+                    ...state,
+                    ...stateReset,
+                    translate,
+                    slideTranslate: translate
+                })
+            })
+        } else {
+            setState({
                 ...state,
                 ...stateReset,
                 translate,
                 slideTranslate: translate,
-                activeSlide: _slides.length - 1
             })
         }
+    },[activeSlide, state, maxSlideIndex])
 
-        const translate = (activeSlide - 1) * getWidth()
-        setState({
-            ...state,
-            ...stateReset,
-            activeSlide: activeSlide - 1,
-            translate,
-            slideTranslate: translate
-        })
-    },[activeSlide, _slides.length, state])
- 
+
+    const prev = useCallback(stateReset => {
+        if(activeSlide.current === 0){
+            activeSlide.current = maxSlideIndex 
+        }else{
+            activeSlide.current--
+        }
+
+        
+        let translate = activeSlide.current * getWidth()
+        if(activeSlide.current === 0) {
+            translate = maxSlideIndex * getWidth()
+            setState({
+                ...state,
+                ...stateReset,
+                translate,
+                slideTranslate: translate,
+            })
+            activeSlide.current = maxSlideIndex + 1
+            setTimeout(() => {
+                setState({
+                    ...state,
+                    ...stateReset,
+                    translate,
+                    slideTranslate: translate
+                })
+                
+            })
+        } else 
+            setState({
+                ...state,
+                ...stateReset,
+                translate,
+                slideTranslate: translate,
+            })
+    },[activeSlide, state, maxSlideIndex])
 
 
     const mouseDownHandler = useCallback(e => {
@@ -101,14 +124,12 @@ export const Slider = props => {
                 ...state,
                 startX: e.screenX,
                 clickDown: true,
-                autoPlayAvailable: false,
+                autoPlayAvailable: false
             })
-        }else{
-            resetEvents(e)
         }
-   
     },[state, startX])
      
+
     const mouseMoveHandler = useCallback (e => {
         if(clickDown && !renderTimeout && startX !== 0){
             const delta = e.screenX - startX
@@ -128,7 +149,8 @@ export const Slider = props => {
     
 
     const mouseUpHandler = useCallback(e => {
-      
+        document.removeEventListener('mousemove', resetEvents(e))
+        document.removeEventListener('mouseup',resetEvents(e))
         const stateReset = {
             clickDown: false,
             startX: 0,
@@ -137,25 +159,25 @@ export const Slider = props => {
             slideTranslate: translate
         }
         
-        if(deltaX !== 0){
-            if(deltaX >= halfWidth && deltaX > 500){
-                prevSlide(stateReset) 
-            }
-            else if(deltaX <= -halfWidth && deltaX < 500){
-                nextSlide(stateReset)
-            } else {
-                return setState({
-                    ...state,
-                    ...stateReset,
-                })
-            }
+        if(deltaX >= halfWidth && deltaX > 500){
+            prev(stateReset)
         }
-    }, [deltaX, nextSlide, prevSlide, state, translate])
+        else if(deltaX <= -halfWidth && deltaX < 500){
+            next(stateReset)
+        } else{
+            return setState({
+                ...state,
+                ...stateReset,
+            })
+        }
+        
+    }, [deltaX, next, prev, state, translate])
 
     const resetEvents = event => {
-        event.stopPropagation()
         event.preventDefault()
+        event.stopPropagation()
     }
+
 
     useEffect(()=>{
         const el = swipeRef.current;  
@@ -164,7 +186,8 @@ export const Slider = props => {
             el.addEventListener('mousedown', mouseDownHandler)
             document.removeEventListener('mousemove', mouseMoveHandler)
             document.removeEventListener('mouseup', mouseUpHandler)
-        }else{
+        }
+        else{
             el.removeEventListener('mousedown', mouseDownHandler)
             document.addEventListener('mousemove', mouseMoveHandler)
             document.addEventListener('mouseup', mouseUpHandler)
@@ -177,6 +200,7 @@ export const Slider = props => {
         }
     },[swipeRef, clickDown, mouseDownHandler,  mouseUpHandler, mouseMoveHandler])
 
+
     const styles = {
         display:`flex`,
         transform: `translateX(-${slideTranslate}px)`,
@@ -184,8 +208,6 @@ export const Slider = props => {
         width: `${getWidth() * _slides.length}px`,
         transition: `transform ease-out ${transition}s`
     }
-
-
 
     return(
         <SliderWrapper>
@@ -200,8 +222,8 @@ export const Slider = props => {
                     }
                 </div>
             {/* </SliderContent> */}
-            <Arrow direction='right' handleClick={nextSlide}/>
-            <Arrow direction='left' handleClick={prevSlide} />
+            <Arrow direction='right' handleClick={next}/>
+            <Arrow direction='left' handleClick={prev} />
         </SliderWrapper>
     )
 }
