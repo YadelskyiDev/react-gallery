@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import styled from 'styled-components';
 
 export const StyledSlide  = styled(({ content, ...rest }) => <div {...rest} />)`
     height: auto;
