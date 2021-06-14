@@ -45,14 +45,14 @@ export const Slider = props => {
             interval = setInterval(play, autoPlay * 1000)
             return () => clearInterval(interval)
         }
-    }, [autoPlay, autoPlayAvailable])
+    }, [autoPlay, autoPlayAvailable, clickDown])
 
 
     const next = useCallback(stateReset => {
         activeSlide.current++
 
         let translate = activeSlide.current * getWidth()
-        if(activeSlide.current >= maxSlideIndex) {
+        if(activeSlide.current > maxSlideIndex) {
             translate = getWidth()
             setState({
                 ...state,
@@ -83,10 +83,11 @@ export const Slider = props => {
     const prev = useCallback(stateReset => {
         if(activeSlide.current === 0){
             activeSlide.current = maxSlideIndex 
+        }else{
+            activeSlide.current--
         }
 
-        activeSlide.current--
-
+        
         let translate = activeSlide.current * getWidth()
         if(activeSlide.current === 0) {
             translate = maxSlideIndex * getWidth()
