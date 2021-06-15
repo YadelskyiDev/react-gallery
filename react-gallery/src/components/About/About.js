@@ -1,7 +1,10 @@
+import { StandartLayout } from '../Layout';
+
 export function About () {
     return(
-        <div>
+        <>
             <h1>About</h1>
-        </div>
+            <StandartLayout/>
+        </>
     )
 }

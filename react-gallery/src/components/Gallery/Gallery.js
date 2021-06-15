@@ -1,6 +1,6 @@
 import { Slider } from '../Slider/Slider';
-import { StyledGroup, GroupItem, GroupTitle, GroupImg, Line } from './StyledGallery';
-
+import { StyledGroup, GroupItem, GroupTitle, GroupImg, Line, VideoWrapper, Video, VideoTextBlock  } from './StyledGallery';
+import { StandartLayout } from '../Layout';
 
 const images = [
     'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
@@ -14,22 +14,18 @@ const images = [
 const imageGroups = [
     {
         photoLink: 'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
-        altName: 'altCity',
         groupName: 'city'
     },
     {
         photoLink: 'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg',
-        altName: 'altNature',
         groupName: 'nature'
     },
     {
         photoLink: 'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg',
-        altName: 'altAlt',
         groupName: 'alt'
     },
     {
         photoLink: 'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
-        altName: 'altHistory',
         groupName: 'history'
     },
 ]
@@ -38,22 +34,29 @@ export function Gallery () {
     return(
         <>
             <Slider slides={images} autoPlay={5}/>
-           
             <StyledGroup>
                 {
                     imageGroups.map((item, i) => {
                         return (
-                            <>
-                                <GroupItem key={i}>
-                                    <GroupImg src={item.photoLink} alt={item.groupName} key={item.altHistory}/> 
-                                    <GroupTitle key={item.groupName}>{item.groupName}</GroupTitle>
-                                </GroupItem>
-                            </>
+                            <GroupItem key={i}>
+                                <GroupImg src={item.photoLink} alt={item.groupName}/> 
+                                <GroupTitle>{item.groupName}</GroupTitle>
+                            </GroupItem>
                         )
                     })
                 }
             </StyledGroup>
             <Line/>
+            <VideoWrapper>
+                <Video>
+                <iframe width="1280" height="720" src="https://www.youtube.com/embed/64Kjey-KxeY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <VideoTextBlock >
+                    <h2>Best of 2020</h2>
+                    <p>Please subscribe to my youtube channel</p>
+                </VideoTextBlock>
+                </Video>
+            </VideoWrapper>
+            <StandartLayout/>
         </>
     )
 }

@@ -16,9 +16,9 @@ export const GroupItem = styled.div`
     position: relative;
     width: 80%;
     height: 25em;
-    transition:  all 1s ease-out;
+    transition:  all .3s ease-out;
     &:hover{
-        transform: scale(0.8)
+        transform: scale(.9)
     }
 `
 
@@ -53,4 +53,31 @@ export const Line = styled.div`
     height: 1px;
     background: #BDBDBD;
     margin-bottom: 40px;
+`
+
+export const VideoWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    margin-bottom: 40px;
+`
+
+export const Video = styled.div`
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    width: 60%;
+    background: #faf7f6;
+    padding: 10%;
+`
+
+export const VideoTextBlock = styled.div`
+    color:#6e6e6e;
+    text-align: center;
+    line-height: 3em;
+    width: 50%;
+    margin-left: 25px;
 `
