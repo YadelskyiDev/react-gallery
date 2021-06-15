@@ -49,7 +49,7 @@ export function Gallery () {
             <Line/>
             <VideoWrapper>
                 <Video>
-                <iframe width="1280" height="720" src="https://www.youtube.com/embed/64Kjey-KxeY" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe width="1280" height="720" src="https://www.youtube.com/embed/64Kjey-KxeY?mute=1&autoplay=1&fs=0&loop=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
                 <VideoTextBlock >
                     <h2>Best of 2020</h2>
                     <p>Please subscribe to my youtube channel</p>
