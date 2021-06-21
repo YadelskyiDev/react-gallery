@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-export const StyledGroup = styled.div`
+export const StyledGroup = styled.section`
     display: grid;
     grid-template: repeat(2, 1fr) / repeat(2, 1fr);
     justify-items: center;
@@ -36,7 +36,7 @@ export const GroupTitle = styled.p`
     width: 100%;
     height: 100%;
     background:  rgba(66, 65, 65, .7);
-    color: white;
+    color: #fff;
     z-index: 3;
     left: 0;
     font-size: 30px;
@@ -55,7 +55,7 @@ export const Line = styled.div`
     margin-bottom: 40px;
 `
 
-export const VideoWrapper = styled.div`
+export const VideoWrapper = styled.section`
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;

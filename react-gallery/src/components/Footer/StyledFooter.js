@@ -15,3 +15,26 @@ export const StyledContact = styled.div`
     height: 3em;
     background: #fff;
 `
+
+export const Ul = styled.ul`
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    height: 100%;
+`
+
+export const Img = styled.img`
+    width: 64px;
+    height: 64px;
+`
+
+export const Li = styled.li`
+    width: 64px;
+    height: 64px;
+    list-style: none;
+`
+
+export const A = styled.a`
+    width: 64px;
+    height: 64px;
+`

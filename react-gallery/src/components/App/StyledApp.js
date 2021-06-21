@@ -6,11 +6,11 @@ export const GlobalStyle = createGlobalStyle`
         padding: 0;
     }
     body{
-        font-family: Verdana, Arial, Helvetica, sans-serif;
+        font-family: "Roboto",sans-serif;
     }
 `;
 
-export  const MainPageStyle = styled.div`
+export const MainPageStyle = styled.div`
     display: flex;
     flex-direction: column;
     min-height: 100vh;
