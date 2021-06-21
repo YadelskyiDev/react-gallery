@@ -16,7 +16,7 @@ export function Nav () {
                         <StyledLink exact to="/">Gallery</StyledLink>
                     </Li>
                     <Li>
-                        <StyledLink to="/about">About</StyledLink>
+                        <StyledLink to="/about">Equipment</StyledLink>
                     </Li>
                 </Ul>  
             </StyledNav>

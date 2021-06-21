@@ -12,7 +12,7 @@ export const StyledFooter = styled.footer`
 export const StyledContact = styled.div`
     position: absolute;
     width: 40%;
-    height: 3em;
+    height: 4em;
     background: #fff;
 `
 
@@ -21,20 +21,26 @@ export const Ul = styled.ul`
     justify-content: space-around;
     width: 100%;
     height: 100%;
+    li{
+        list-style: none;
+    }
 `
 
-export const Img = styled.img`
-    width: 64px;
-    height: 64px;
-`
-
-export const Li = styled.li`
-    width: 64px;
-    height: 64px;
-    list-style: none;
-`
-
-export const A = styled.a`
-    width: 64px;
-    height: 64px;
+export const FooterText = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    color: #6e6e6e;
+    
+    p:first-child{
+        font-size: 30px;
+        top: 0;
+    }
+    p{
+        position: relative;
+        top: 33%;
+        font-size: 10px;
+    }
 `

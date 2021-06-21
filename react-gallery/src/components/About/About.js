@@ -1,9 +1,9 @@
 import { StandartLayout } from '../Layout';
 
-export function About () {
+export function Equipment () {
     return(
         <>
-            <h1>About</h1>
+            <h1>Equipment</h1>
             <StandartLayout/>
         </>
     )
