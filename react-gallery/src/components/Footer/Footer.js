@@ -2,7 +2,7 @@ import { StyledFooter, StyledContact, Ul, FooterText } from './StyledFooter';
 import Instagram from '../../Assets/Social/instagram.png';
 import Facebook from '../../Assets/Social/facebook.png';
 import YouTube from '../../Assets/Social/youtube.png';
-import LinkedIn from '../../Assets/Social/linkedin.png'
+import LinkedIn from '../../Assets/Social/linkedin.png';
 
 
 const social = [

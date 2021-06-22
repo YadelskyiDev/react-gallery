@@ -38,7 +38,7 @@ export function Gallery () {
                 {
                     imageGroups.map((item, i) => {
                         return (
-                            <GroupItem key={i}>
+                            <GroupItem key={i + 1}>
                                 <GroupImg src={item.photoLink} alt={item.groupName}/> 
                                 <GroupTitle>{item.groupName}</GroupTitle>
                             </GroupItem>

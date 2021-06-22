@@ -21,8 +21,16 @@ export const Ul = styled.ul`
     justify-content: space-around;
     width: 100%;
     height: 100%;
+   
     li{
         list-style: none;
+    }
+    img{
+        transition:  all .5s ease-in-out;
+    }
+    img:hover{
+       
+        transform: scale(1.2)
     }
 `
 
