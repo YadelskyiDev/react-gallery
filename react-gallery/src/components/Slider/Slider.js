@@ -54,7 +54,9 @@ export const Slider = props => {
             interval = setInterval(play, autoPlay * 1000)
         }
         return () => {
-            clearInterval(interval)
+            if (autoPlay) {
+                clearInterval(interval)
+              }
             window.removeEventListener('resize', onResize)
         }
     }, [autoPlay, autoPlayAvailable, clickDown])
@@ -238,8 +240,14 @@ export const Slider = props => {
                     }
                 </div>
             {/* </SliderContent> */}
-            <Arrow direction='right' handleClick={next}/>
-            <Arrow direction='left' handleClick={prev} />
+            {
+                getWidth() > 786 ?
+                <>
+                    <Arrow direction='right' handleClick={next}/>
+                    <Arrow direction='left' handleClick={prev} />
+                   
+                </> : false
+            }
         </SliderWrapper>
     )
 }
