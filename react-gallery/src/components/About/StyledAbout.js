@@ -7,9 +7,10 @@ export const StyledSection = styled.section`
     flex-direction: column;
     position:relative;
     height: 100vh;
-    background: #faf7f6;
     padding: 0 10%;
-
+    @media(max-width: 786px){
+        padding: 0;
+    }
 `
 
 export const ImgMavic = styled.div`
@@ -23,8 +24,15 @@ export const ImgMavic = styled.div`
 `
 
 export const DroneDescription = styled.p`
+    display: flex;
+    height: 100%;
+    justify-content: center;
+    align-items: center;
     color: #6e6e6e;
-    margin: 40px 0;
+
+    @media(max-width: 786px){
+       margin: 0;
+    }
 `
 
 export const Line = styled.div`
@@ -35,6 +43,10 @@ export const Line = styled.div`
     height: 1px;
     background: #BDBDBD;
     margin-bottom: 40px;
+
+    @media(max-width: 786px){
+        display: none;
+    }
 `
 
 export const ImgPro = styled.div`

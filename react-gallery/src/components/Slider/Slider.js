@@ -29,10 +29,12 @@ export const Slider = props => {
     const autoPlayRef = useRef();
     const swipeRef = useRef();
     const activeSlide = useRef(0);
+    const resizeRef = useRef();
 
     
     useEffect(() => {
         autoPlayRef.current = next;
+        resizeRef.current = handleResize;
     })
 
 
@@ -40,13 +42,27 @@ export const Slider = props => {
         const play = () => {
             autoPlayRef.current();
         }
+
+        const resize = () => {
+            resizeRef.current();
+          }
+
+        const onResize = window.addEventListener('resize', resize)
+        
         let interval = null
         if(autoPlay && autoPlayAvailable){
             interval = setInterval(play, autoPlay * 1000)
-            return () => clearInterval(interval)
+        }
+        return () => {
+            clearInterval(interval)
+            window.removeEventListener('resize', onResize)
         }
     }, [autoPlay, autoPlayAvailable, clickDown])
 
+
+    const handleResize = () => {
+        setState({ ...state, slideTranslate: getWidth(), transition: 0 })
+      }
 
     const next = useCallback(stateReset => {
         activeSlide.current++

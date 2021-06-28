@@ -7,6 +7,11 @@ export const StyledGroup = styled.section`
     align-items: center;
     width: 100%;
     min-height: 100vh;
+    @media(max-width: 786px){
+        grid-template-columns: none;
+        gap: 40px 0;
+        margin-top: 40px;
+    }
 `
 
 export const GroupItem = styled.div`
@@ -17,9 +22,16 @@ export const GroupItem = styled.div`
     width: 80%;
     height: 25em;
     transition:  all .3s ease-out;
-    &:hover{
-        transform: scale(.9)
+
+    @media (hover: hover) and (pointer: fine) {
+        :hover {transform: scale(.9)}
     }
+    
+    @media(max-width: 786px){
+        flex-direction: column;
+        flex-wrap: wrap;
+        width: 100%;
+    }    
 `
 
 export const GroupImg = styled.img`
@@ -42,7 +54,7 @@ export const GroupTitle = styled.p`
     font-size: 30px;
     text-transform: uppercase;
     filter: blur(0);
-    &:hover{
+    :hover{
         visibility: visible;
     }
 `
@@ -53,6 +65,9 @@ export const Line = styled.div`
     height: 1px;
     background: #BDBDBD;
     margin-bottom: 40px;
+    @media(max-width: 786px){
+        display: none;
+    }
 `
 
 export const VideoWrapper = styled.section`
@@ -72,6 +87,10 @@ export const Video = styled.div`
     width: 60%;
     background: #faf7f6;
     padding: 10%;
+    @media(max-width: 786px){
+        width: 100%;
+        flex-wrap: wrap;
+    }
 `
 
 export const VideoTextBlock = styled.div`
@@ -80,4 +99,9 @@ export const VideoTextBlock = styled.div`
     line-height: 3em;
     width: 50%;
     margin-left: 25px;
+    @media(max-width: 786px){
+        margin-top: 40px;
+        width: 100%;
+        margin-left: 0;
+    }
 `
