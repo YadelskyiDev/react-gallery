@@ -47,7 +47,7 @@ export const Slider = props => {
             resizeRef.current();
           }
 
-        const onResize = window.addEventListener('resize', resize)
+        window.addEventListener('resize', resize)
         
         let interval = null
         if(autoPlay && autoPlayAvailable){
@@ -57,7 +57,7 @@ export const Slider = props => {
             if (autoPlay) {
                 clearInterval(interval)
               }
-            window.removeEventListener('resize', onResize)
+            window.removeEventListener('resize', resize)
         }
     }, [autoPlay, autoPlayAvailable, clickDown])
 
@@ -245,7 +245,6 @@ export const Slider = props => {
                 <>
                     <Arrow direction='right' handleClick={next}/>
                     <Arrow direction='left' handleClick={prev} />
-                   
                 </> : false
             }
         </SliderWrapper>

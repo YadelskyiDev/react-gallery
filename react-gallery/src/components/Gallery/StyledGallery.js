@@ -3,10 +3,12 @@ import styled from 'styled-components';
 export const StyledGroup = styled.section`
     display: grid;
     grid-template: repeat(2, 1fr) / repeat(2, 1fr);
+    gap: 1em;
     justify-items: center;
     align-items: center;
     width: 100%;
     min-height: 100vh;
+    margin: 1.5em 0;
     @media(max-width: 786px){
         grid-template-columns: none;
         gap: 40px 0;
