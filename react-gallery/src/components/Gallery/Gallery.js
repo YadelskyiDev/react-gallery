@@ -1,4 +1,6 @@
-import { Slider } from '../Slider/Slider';
+import {  useState, useEffect } from 'react';
+import axios from 'axios';
+import { Slider } from '../Slider';
 import { StyledGroup, GroupItem, GroupTitle, GroupImg, Line, VideoWrapper, Video, VideoTextBlock  } from './StyledGallery';
 import { StandartLayout } from '../Layout';
 
@@ -11,36 +13,48 @@ const images = [
     'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg'
 ]
 
-const imageGroups = [
-    {
-        photoLink: 'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
-        groupName: 'city'
-    },
-    {
-        photoLink: 'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg',
-        groupName: 'nature'
-    },
-    {
-        photoLink: 'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg',
-        groupName: 'alt'
-    },
-    {
-        photoLink: 'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
-        groupName: 'history'
-    },
-]
+// const imageGroups = [
+//     {
+//         photoLink: 'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
+//         groupName: 'city'
+//     },
+//     {
+//         photoLink: 'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg',
+//         groupName: 'nature'
+//     },
+//     {
+//         photoLink: 'https://images.wallpaperscraft.com/image/city_river_bridge_191841_2560x1024.jpg',
+//         groupName: 'alt'
+//     },
+//     {
+//         photoLink: 'https://i.pinimg.com/originals/2e/48/ce/2e48ce63e386ab9a056115d5b5c46ed1.jpg',
+//         groupName: 'history'
+//     },
+// ]
 
 export function Gallery () {
+
+    const [state, setState] = useState()
+
+    useEffect(()=>{
+        axios.get('https://react-gallery-7e1d5-default-rtdb.firebaseio.com/categories.json').then(responce => { 
+            setState(responce.data)
+        })
+        
+    },[])
+
+    if(!state) return null
+
     return(
         <>
             <Slider slides={images} autoPlay={5}/>
             <StyledGroup>
-                {
-                    imageGroups.map((item, i) => {
+                {  
+                    state.map((item, i) => {
                         return (
-                            <GroupItem key={i + 1}>
-                                <GroupImg src={item.photoLink} alt={item.groupName}/> 
-                                <GroupTitle>{item.groupName}</GroupTitle>
+                            <GroupItem to="/photos" key={i + 1}>
+                                <GroupImg src={item.photos[0].photoLink} alt={item.name}/> 
+                                <GroupTitle>{item.name}</GroupTitle>
                             </GroupItem>
                         )
                     })
