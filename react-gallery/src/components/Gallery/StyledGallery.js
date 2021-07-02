@@ -1,5 +1,5 @@
 import styled from 'styled-components';
-import { NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
 export const StyledGroup = styled.section`
     display: grid;
@@ -17,7 +17,7 @@ export const StyledGroup = styled.section`
     }
 `
 
-export const GroupItem = styled(NavLink)`
+export const GroupItem = styled(Link)`
     display: flex;
     justify-content: center;
     align-items: center;

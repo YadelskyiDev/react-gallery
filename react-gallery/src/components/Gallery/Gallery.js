@@ -51,8 +51,15 @@ export function Gallery () {
             <StyledGroup>
                 {  
                     state.map((item, i) => {
+
                         return (
-                            <GroupItem to="/photos" key={i + 1}>
+                            <GroupItem to={{
+                                pathname: '/photos',
+                                state: {
+                                    name: item.name,
+                                    photoLink:item.photos
+                                }
+                            }} key={i + 1}>
                                 <GroupImg src={item.photos[0].photoLink} alt={item.name}/> 
                                 <GroupTitle>{item.name}</GroupTitle>
                             </GroupItem>
